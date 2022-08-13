@@ -1,4 +1,6 @@
 ﻿
+@model AgendaContatos.Mvc.Models.AccountRegisterModel
+
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
@@ -10,26 +12,38 @@
         <p>Entre com os seus dados para criar uma conta na agenda.</p>
     </div>
 
-    <form method="post" action="/Account/Register">
-
+    @using(Html.BeginForm())
+    {
         <div class="mb-3">
             <label>Entre com seu nome: </label>
-            <input type="text" class="form-control" name="nome"/>
+            @Html.TextBoxFor(model => model.Nome, new { @class="form-control" })
+            <div class="text-danger">
+                @Html.ValidationMessageFor(model => model.Nome)
+            </div>
         </div>
 
         <div class="mb-3">
             <label>Entre com seu email: </label>
-            <input type="text" class="form-control" name="email"/>
+            @Html.TextBoxFor(model => model.Email, new { @class="form-control" })
+            <div class="text-danger">
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
         </div>
 
         <div class="mb-3">
             <label>Entre com sua senha: </label>
-            <input type="password" class="form-control" name="senha"/>
+            @Html.PasswordFor(model => model.Senha, new { @class="form-control" })
+            <div class="text-danger">
+                @Html.ValidationMessageFor(model => model.Senha)
+            </div>
         </div>
 
         <div class="mb-3">
             <label>Confirme a sua senha: </label>
-            <input type="password" class="form-control" name="senhaConfirmacao"/>
+            @Html.PasswordFor(model => model.SenhaConfirmacao, new { @class="form-control" })
+            <div class="text-danger">
+                @Html.ValidationMessageFor(model => model.SenhaConfirmacao)
+            </div>
         </div>
 
         <div class="mb-3 d-grid">
@@ -41,8 +55,7 @@
                 Já possui conta? <strong>Acesse aqui!</strong>
             </a>
         </div>
-
-    </form>
+    }
 
     <div class="text-center">
         <strong>@TempData["Mensagem"]</strong>
