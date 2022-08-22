@@ -1,0 +1,33 @@
+﻿@using AgendaContatos.Mvc.Models
+@using Newtonsoft.Json
+
+@{
+    Layout = "~/Views/Shared/_ContatosLayout.cshtml";
+
+    <!--Ler os dados do cookie-->
+    var json = User.Identity.Name; 
+
+    var authenticationModel = JsonConvert.DeserializeObject<AuthenticationModel>(json);
+}
+
+<h5>Dados do Usuário</h5>
+<p>Informações do usuário autenticado na agenda.</p>
+<hr/>
+
+<div>
+    ID do usuário: <strong>@authenticationModel.IdUsuario</strong>
+</div>
+
+<div>
+    Nome do usuário: <strong>@authenticationModel.Nome</strong>
+</div>
+
+<div>
+    E-mail do usuário: <strong>@authenticationModel.Email</strong>
+</div>
+
+<div>
+    Data/Hora de acesso: <strong>@authenticationModel.DataHoraAcesso.ToString("dd/MM/yyyy HH:mm")</strong>
+</div>
+
+

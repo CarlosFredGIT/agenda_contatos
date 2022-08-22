@@ -1,7 +1,16 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Habilitando o uso de Cookies de Autenticação do AspNet MVC
+builder.Services.Configure<CookiePolicyOptions>
+    (options => { options.MinimumSameSitePolicy = SameSiteMode.None; });
+
+builder.Services.AddAuthentication
+    (CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 var app = builder.Build();
 
@@ -14,6 +23,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//Habilitando o uso de Cookies de Autenticação do AspNet MVC
+app.UseCookiePolicy();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
