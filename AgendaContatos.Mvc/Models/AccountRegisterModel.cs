@@ -18,7 +18,7 @@ namespace AgendaContatos.Mvc.Models
         [Required(ErrorMessage = "Por favor, informe sua senha.")]
         public string Senha { get; set; }
 
-        [Compare("Senha", ErrorMessage = "Senhas não confetem, por favor verifique.")]
+        [Compare("Senha", ErrorMessage = "Senhas não conferem, por favor verifique.")]
         [Required(ErrorMessage = "Por favor, confirme sua senha.")]
         public string SenhaConfirmacao { get; set; }
     }

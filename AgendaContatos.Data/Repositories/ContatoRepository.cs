@@ -65,7 +65,7 @@ namespace AgendaContatos.Data.Repositories
         public void Delete(Contato contato)
         {
             var sql = $@"
-                            DELETE * 
+                            DELETE  
                             FROM CONTATO
                             WHERE
                                 IDCONTATO = @IdContato
@@ -81,7 +81,7 @@ namespace AgendaContatos.Data.Repositories
         public List<Contato> GetByUsuario(Guid idUsuario)
         {
             var sql = $@"
-                            SELETE * 
+                            SELECT * 
                             FROM CONTATO
                             WHERE IDUSUARIO = @idusuario
                             ORDER BY NOME
