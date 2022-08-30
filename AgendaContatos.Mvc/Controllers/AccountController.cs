@@ -1,6 +1,8 @@
 ﻿using AgendaContatos.Data.Entities;
 using AgendaContatos.Data.Repositories;
+using AgendaContatos.Messages;
 using AgendaContatos.Mvc.Models;
+using Bogus;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +25,7 @@ namespace AgendaContatos.Mvc.Controllers
             {
                 try
                 {
-                    var usuarioRepository = new UsuarioRepository();                   
+                    var usuarioRepository = new UsuarioRepository();
                     var usuario = usuarioRepository.GetByEmailESenha(model.Email, model.Senha);
 
                     if (usuario != null)
@@ -123,7 +125,9 @@ namespace AgendaContatos.Mvc.Controllers
 
                     if (usuario != null)
                     {
-                        TempData["Mensagem"] = $"Olá {usuario.Nome}, você receberá um e-mail para cadastrar uma nova senha.";
+                        RecuperarSenhaDoUsuario(usuario);
+
+                        TempData["Mensagem"] = $"Olá {usuario.Nome}, você receberá um e-mail contendo uma nova senha de acesso.";
                     }
                     else
                     {
@@ -138,7 +142,7 @@ namespace AgendaContatos.Mvc.Controllers
             return View();
         }
 
-        public void GravarCookieDeAutenticacao(string json)
+        private void GravarCookieDeAutenticacao(string json)
         {
             var claimsIdentity = new ClaimsIdentity
                 (new[] { new Claim(ClaimTypes.Name, json) }, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -147,9 +151,32 @@ namespace AgendaContatos.Mvc.Controllers
             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
         }
 
-        public void RemoverCookieDeAutenticacao()
+        private void RemoverCookieDeAutenticacao()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        private void RecuperarSenhaDoUsuario(Usuario usuario)
+        {
+            var faker = new Faker();
+            var novaSenha = faker.Internet.Password(10);
+
+            var mailTo = usuario.Email;
+            var subject = "Recuperação de senha de acesso - Agenda de Contatos";
+            var body = $@"
+                            <div>
+                                <p>Olá {usuario.Nome}, uma nova senha foi gerada com sucesso.</p>
+                                <p>Utilize a senha <strong>{novaSenha}</strong> para acessar sua conta</p>
+                                <p>Depois de acessar, você poderá atualizar esta senha para outra de sua preferência.</p>
+                                <p>Equipe Agenda de Contatos</p>
+                            </div>
+                        ";
+
+            var emailMessage = new EmailMessage();
+            emailMessage.SendMail(mailTo, subject, body);
+
+            var usuarioRepository = new UsuarioRepository();
+            usuarioRepository.Update(usuario.IdUsuario, novaSenha);
         }
     }
 }

@@ -80,9 +80,29 @@ namespace AgendaContatos.Mvc.Controllers
             return View(lista);
         }
 
-        public IActionResult Edicao()
+        public IActionResult Edicao(Guid id)
         {
-            return View();
+            var model = new ContatosEdicaoModel();
+
+            try
+            {
+                var authenticationModel = ObterUsuarioAutenticado();
+                var contatoRepository = new ContatoRepository();
+                var contato = contatoRepository.GetById(id, authenticationModel.IdUsuario);
+
+                model.IdContato = contato.IdContato;
+                model.Nome = contato.Nome;
+                model.Email = contato.Email;
+                model.Telefone= contato.Telefone;
+                model.DataNascimento = contato.DataNascimento.ToString("yyyy-MM-dd");
+
+            }
+            catch (Exception e)
+            {
+                TempData["Mensagem"] = $@"Falha: {e.Message}";
+            }
+
+            return View(model);
         }
 
         [HttpPost]
@@ -92,7 +112,19 @@ namespace AgendaContatos.Mvc.Controllers
             {
                 try
                 {
+                    var contatoRepository = new ContatoRepository();
+                    var contato = new Contato();
 
+                    contato.IdContato = model.IdContato;
+                    contato.Nome = model.Nome;
+                    contato.Email = model.Email;
+                    contato.Telefone = model.Telefone;
+                    contato.DataNascimento = DateTime.Parse(model.DataNascimento);
+
+                    contatoRepository.Update(contato);
+
+                    TempData["Mensagem"] = $@"Contato {contato.Nome}, atualizado com sucesso.";
+                    return RedirectToAction("Consulta");
                 }
                 catch (Exception e)
                 {
@@ -100,22 +132,7 @@ namespace AgendaContatos.Mvc.Controllers
                 }
             }
 
-            return View();
-        }
-
-        public AuthenticationModel ObterUsuarioAutenticado()
-        {
-            var json = User.Identity.Name;
-            return JsonConvert.DeserializeObject<AuthenticationModel>(json);
-        }
-
-        public int ObterIdade(DateTime dataNascimento)
-        {
-            var idade = DateTime.Now.Year - dataNascimento.Year;
-            if (DateTime.Now.DayOfYear < dataNascimento.DayOfYear)
-                idade--;
-
-            return idade;
+            return View(model);
         }
 
         public IActionResult Exclusao(Guid id)
@@ -135,8 +152,23 @@ namespace AgendaContatos.Mvc.Controllers
             {
                 TempData["Mensagem"] = $@"Falha ao excluir: {e.Message}";
             }
-            
+
             return RedirectToAction("Consulta");
+        }
+
+        public AuthenticationModel ObterUsuarioAutenticado()
+        {
+            var json = User.Identity.Name;
+            return JsonConvert.DeserializeObject<AuthenticationModel>(json);
+        }
+
+        public int ObterIdade(DateTime dataNascimento)
+        {
+            var idade = DateTime.Now.Year - dataNascimento.Year;
+            if (DateTime.Now.DayOfYear < dataNascimento.DayOfYear)
+                idade--;
+
+            return idade;
         }
     }
 }

@@ -5,11 +5,15 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgendaContatos.Mvc", "AgendaContatos.Mvc\AgendaContatos.Mvc.csproj", "{41E5F46F-4821-4622-B984-A9DF3C3B9F14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgendaContatos.Data", "AgendaContatos.Data\AgendaContatos.Data.csproj", "{CA4D39E4-317F-46FD-BFD6-44797EB22535}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgendaContatos.Data", "AgendaContatos.Data\AgendaContatos.Data.csproj", "{CA4D39E4-317F-46FD-BFD6-44797EB22535}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation Layer", "1 - Presentation Layer", "{392D9AFE-AC16-4283-A56B-86A71B55FC8A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Data Layer", "2 - Data Layer", "{7F3ED488-BDF7-4AE4-9E8A-57FAD0CA2511}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Messages Layer", "3 - Messages Layer", "{510A77BC-2D60-4249-AD4B-B75D9C2E572C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgendaContatos.Messages", "AgendaContatos.Messages\AgendaContatos.Messages.csproj", "{E547B6BA-E227-42D9-9292-2E5F7AC68190}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +29,10 @@ Global
 		{CA4D39E4-317F-46FD-BFD6-44797EB22535}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA4D39E4-317F-46FD-BFD6-44797EB22535}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA4D39E4-317F-46FD-BFD6-44797EB22535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E547B6BA-E227-42D9-9292-2E5F7AC68190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E547B6BA-E227-42D9-9292-2E5F7AC68190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E547B6BA-E227-42D9-9292-2E5F7AC68190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E547B6BA-E227-42D9-9292-2E5F7AC68190}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{41E5F46F-4821-4622-B984-A9DF3C3B9F14} = {392D9AFE-AC16-4283-A56B-86A71B55FC8A}
 		{CA4D39E4-317F-46FD-BFD6-44797EB22535} = {7F3ED488-BDF7-4AE4-9E8A-57FAD0CA2511}
+		{E547B6BA-E227-42D9-9292-2E5F7AC68190} = {510A77BC-2D60-4249-AD4B-B75D9C2E572C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BF67D064-1DBA-4C89-8FA9-9F2BB79490B5}
